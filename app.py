@@ -2,6 +2,7 @@ from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, ListView, ListItem, Label
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Static
+from launcher import launch_game
 
 from parser import get_games
 
@@ -27,6 +28,13 @@ class GameLauncher(App):
         self.query_one("#detail-text", Static).update(
                 f"Name: {game['name']}\nType: {game['type']}\nPath: {game['path']}"
         )
+
+    def on_key(self, event) -> None:
+        if event.key == "enter":
+            index = self.query_one(ListView).index
+            if index is not None:
+                game = self.games[index]
+                launch_game(game["path"])
 
 if __name__ == "__main__":
     app = GameLauncher()
