@@ -1,0 +1,47 @@
+Screen {
+    background: #0d0d0d;
+    color: #00ff99;
+}
+
+Header {
+    background: #0d0d0d;
+    color: #00ff99;
+    border-bottom: tall #00ff99;
+}
+
+Footer {
+    background: #0d0d0d;
+    color: #00ff99;
+}
+
+#sidebar {
+    width: 30%;
+    border-right: tall #00ff99;
+    padding: 1;
+}
+
+ListView {
+    color: #00ff99;
+    padding: 0 1;
+}
+
+ListItem:hover {
+    background: #00ff9922;
+    color: #ffffff;
+}
+
+ListItem.--highlight {
+    background: #00ff99;
+    color: #0d0d0d;
+}
+
+#detail {
+    width: 70%;
+    padding: 2;
+}
+
+#detail-text {
+    color: #00ff99;
+    padding: 1;
+    border: tall #00ff9955;
+}

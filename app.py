@@ -7,13 +7,15 @@ from parser import get_games
 
 class GameLauncher(App):
 
+    CSS_PATH = "app.tcss"
+
     def compose(self) -> ComposeResult:
         self.games = get_games()
         yield Header()
         with Horizontal():
             with Vertical(id="sidebar"):
                 yield ListView(
-                        *[LabelItem(Label(g["name"])) for g in self.games]
+                        *[ListItem(Label(g["name"])) for g in self.games]
                 )
             with Vertical(id="detail"):
                 yield Static("Select a game to see details", id="detail-text")
