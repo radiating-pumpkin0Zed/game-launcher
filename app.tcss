@@ -15,7 +15,7 @@ Footer {
 }
 
 #sidebar {
-    width: 30%;
+    width: 40%;
     border-right: tall #00ff99;
     padding: 1;
 }
@@ -33,6 +33,11 @@ ListItem:hover {
 ListItem.--highlight {
     background: #00ff99;
     color: #0d0d0d;
+}
+
+ListView > .lsit-view--cursor {
+    background: #00ff99 !important;
+    color: #0d0d0d !important;
 }
 
 #detail {

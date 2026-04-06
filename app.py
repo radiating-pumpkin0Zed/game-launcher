@@ -9,10 +9,11 @@ from parser import get_games
 class GameLauncher(App):
 
     CSS_PATH = "app.tcss"
+    TITLE = "Game Launcher"
 
     def compose(self) -> ComposeResult:
         self.games = get_games()
-        yield Header()
+        yield Header(show_clock=True)
         with Horizontal():
             with Vertical(id="sidebar"):
                 yield ListView(
