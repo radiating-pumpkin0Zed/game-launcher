@@ -2,7 +2,7 @@ from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, ListView, ListItem, Label
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Static
-from launcher import launch_game
+from launcher import launch_game, load_data
 
 from parser import get_games
 
@@ -41,13 +41,25 @@ class GameLauncher(App):
             index = self.query_one(ListView).index
             if index is not None:
                 game = self.games[index]
-                launch_game(game["path"])
+                launch_game(game)
             
     def get_css_variables(self) -> dict[str, str]:
         variables = super().get_css_variables()
         variables["accent"] = "#00ff99"
         variables["highlight"] = "#00ff99"
         return variables
+    
+    def on_list_view_selected(self, event: ListView.Selected) -> None:
+        index = event.list_view.index
+        game = self.games[index]
+        data = load_data()
+        last_played = data.get(game["name"], "Never")
+        self.query_one("#detail-text", Static).update(
+            f"Name:        {game['name']}\n"
+            f"Type:        {game['type']}\n"
+            f"Path:        {game['path']}\n"
+            f"Last Played: {last_played}"
+        )     
 
 if __name__ == "__main__":
     app = GameLauncher()
