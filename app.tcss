@@ -3,12 +3,6 @@ Screen {
     color: #00ff99;
 }
 
-Header {
-    background: #0d0d0d;
-    color: #00ff99;
-    border-bottom: tall #00ff99;
-}
-
 Footer {
     background: #0d0d0d;
     color: #00ff99;
@@ -18,6 +12,15 @@ Footer {
     width: 40%;
     border-right: tall #00ff99;
     padding: 1;
+}
+
+#header {
+    background: #0d0d0d;
+    color: #00ff99;
+    border-bottom: tall #00ff99;
+    padding: 0 2;
+    text-align: center;
+    text-style: bold;
 }
 
 ListView {
@@ -35,7 +38,7 @@ ListItem.--highlight {
     color: #0d0d0d;
 }
 
-ListView > .lsit-view--cursor {
+ListView > .list-view--cursor {
     background: #00ff99 !important;
     color: #0d0d0d !important;
 }

@@ -10,10 +10,16 @@ class GameLauncher(App):
 
     CSS_PATH = "app.tcss"
     TITLE = "Game Launcher"
+    DEFAULT_CSS = """
+    ListView .list-view--cursor {
+        background: #00ff99;
+        color: #0d0d0d;
+    }
+    """
 
     def compose(self) -> ComposeResult:
         self.games = get_games()
-        yield Header(show_clock=True)
+        yield Static("⚡ GAME LAUNCHER", id="header")
         with Horizontal():
             with Vertical(id="sidebar"):
                 yield ListView(
@@ -36,6 +42,12 @@ class GameLauncher(App):
             if index is not None:
                 game = self.games[index]
                 launch_game(game["path"])
+            
+    def get_css_variables(self) -> dict[str, str]:
+        variables = super().get_css_variables()
+        variables["accent"] = "#00ff99"
+        variables["highlight"] = "#00ff99"
+        return variables
 
 if __name__ == "__main__":
     app = GameLauncher()
