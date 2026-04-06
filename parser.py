@@ -5,6 +5,9 @@ GAMES_DIR = "/mnt/c/Users/Zedd/Desktop/games"
 def get_games():
     games = []
 
+    if not os.path.isdir(GAMES_DIR):
+        return games
+
     for filename in os.listdir(GAMES_DIR):
         name, ext = os.path.splitext(filename)
         ext = ext.lower()
