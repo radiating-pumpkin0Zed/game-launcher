@@ -1,14 +1,19 @@
 import os
 
-GAMES_DIR = "/mnt/c/Users/Zedd/Desktop/games"
+DEFAULT_GAMES_DIR = "/mnt/c/Users/Zedd/Desktop/games"
+
+
+def get_games_dir() -> str:
+    return os.environ.get("GAMES_DIR", DEFAULT_GAMES_DIR)
 
 def get_games():
     games = []
+    games_dir = get_games_dir()
 
-    if not os.path.isdir(GAMES_DIR):
+    if not os.path.isdir(games_dir):
         return games
 
-    for filename in os.listdir(GAMES_DIR):
+    for filename in os.listdir(games_dir):
         name, ext = os.path.splitext(filename)
         ext = ext.lower()
 
@@ -16,7 +21,7 @@ def get_games():
             games.append({
                 "name": name,
                 "type": ext,
-                "path": os.path.join(GAMES_DIR, filename),
+                "path": os.path.join(games_dir, filename),
             })
 
     games.sort(key=lambda g: g["name"].lower())
