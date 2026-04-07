@@ -2,5 +2,5 @@ venv/
 __pycache__/
 *.pyc
 .env
-requirements.txt
-
+data.json
+*.local.json

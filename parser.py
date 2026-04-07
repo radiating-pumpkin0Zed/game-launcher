@@ -1,6 +1,6 @@
 import os
 
-DEFAULT_GAMES_DIR = "/mnt/c/Users/Zedd/Desktop/games"
+DEFAULT_GAMES_DIR = os.path.join(os.path.expanduser("~"), "games")
 
 
 def get_games_dir() -> str:

@@ -3,13 +3,22 @@ import json
 import os
 from datetime import datetime
 
-DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
+
+def get_data_file() -> str:
+    state_home = os.environ.get(
+        "XDG_STATE_HOME",
+        os.path.join(os.path.expanduser("~"), ".local", "state"),
+    )
+    data_dir = os.path.join(state_home, "game-launcher")
+    os.makedirs(data_dir, exist_ok=True)
+    return os.path.join(data_dir, "data.json")
 
 def load_data() -> dict:
-    if not os.path.exists(DATA_FILE):
+    data_file = get_data_file()
+    if not os.path.exists(data_file):
         return {}
     try:
-        with open(DATA_FILE, "r") as f:
+        with open(data_file, "r") as f:
             return json.load(f)
     except (json.JSONDecodeError, OSError):
         return {}
@@ -17,7 +26,7 @@ def load_data() -> dict:
 def save_last_played(game_name: str) -> None:
     data = load_data()
     data[game_name] = datetime.now().strftime("%Y-%m-%d %H:%M")
-    with open(DATA_FILE, "w") as f:
+    with open(get_data_file(), "w") as f:
         json.dump(data, f, indent=2)
 
 def launch_game(game: dict) -> None:
