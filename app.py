@@ -19,6 +19,7 @@ class GameLauncher(App):
 
     def compose(self) -> ComposeResult:
         self.games = get_games()
+        self.filtered_games = self.games.copy()
         yield Static("⚡ GAME LAUNCHER", id="header")
         with Horizontal():
             with Vertical(id="sidebar"):
@@ -34,7 +35,7 @@ class GameLauncher(App):
         if event.key == "enter":
             index = self.query_one(ListView).index
             if index is not None:
-                game = self.games[index]
+                game = self.filtered_games[index]
                 launch_game(game)
             
     def get_css_variables(self) -> dict[str, str]:
@@ -45,7 +46,7 @@ class GameLauncher(App):
     
     def on_list_view_selected(self, event: ListView.Selected) -> None:
         index = event.list_view.index
-        game = self.games[index]
+        game = self.filtered_games[index]
         data = load_data()
         last_played = data.get(game["name"], "Never")
         self.query_one("#detail-text", Static).update(
@@ -57,10 +58,10 @@ class GameLauncher(App):
     
     def on_input_changed(self, event: Input.Changed) -> None:
         query = event.value.lower()
-        filtered = [g for g in self.games if query in g["name"].lower()]
+        self.filtered_games = [g for g in self.games if query in g["name"].lower()]
         list_view = self.query_one(ListView)
         list_view.clear()
-        for game in filtered:
+        for game in self.filtered_games:
             list_view.append(ListItem(Label(game["name"])))
 
 if __name__ == "__main__":
