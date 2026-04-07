@@ -1,9 +1,30 @@
 import os
 
 DEFAULT_GAMES_DIR = os.path.join(os.path.expanduser("~"), "games")
+ENV_FILE = os.path.join(os.path.dirname(__file__), ".env")
+
+
+def load_env_file() -> None:
+    if not os.path.exists(ENV_FILE):
+        return
+
+    try:
+        with open(ENV_FILE, "r") as env_file:
+            for raw_line in env_file:
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+
+                key, value = line.split("=", 1)
+                key = key.strip()
+                value = value.strip().strip("\"'")
+                os.environ.setdefault(key, value)
+    except OSError:
+        return
 
 
 def get_games_dir() -> str:
+    load_env_file()
     return os.environ.get("GAMES_DIR", DEFAULT_GAMES_DIR)
 
 def get_games():
